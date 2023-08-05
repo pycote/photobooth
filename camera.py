@@ -216,15 +216,14 @@ def UpdateDisplay():
                     backgroundPicture.blit(text, textpos)
             else:
                     background.blit(text, textpos)
-    
-    if(ImageShowed == True):
-    	screenPicture.blit(backgroundPicture, (0, 0))   	
+
+    if (ImageShowed == True):
+            screenPicture.blit(backgroundPicture, (0, 0))
     else:
-    	screen.blit(background, (0, 0))
-   
+            screen.blit(background, (0, 0))
+    
     pygame.display.flip()
     return
-
 
 def ShowPicture(file, delay):
     global pygame
@@ -264,22 +263,22 @@ def CapturePicture():
         global pygame
         global ImageShowed
         global CountDownPhoto
-	global BackgroundColor	
+        global BackgroundColor	
 	
-	BackgroundColor = ""
-	Numeral = ""
+        BackgroundColor = ""
+        Numeral = ""
         Message = ""
-	UpdateDisplay()
-	time.sleep(1)
-	CountDownPhoto = ""
-	UpdateDisplay()
-	background.fill(pygame.Color("black"))
-	screen.blit(background, (0, 0))
-	pygame.display.flip()
-	camera.start_preview()
-	BackgroundColor = "black"
+        UpdateDisplay()
+        time.sleep(1)
+        CountDownPhoto = ""
+        UpdateDisplay()
+        background.fill(pygame.Color("black"))
+        screen.blit(background, (0, 0))
+        pygame.display.flip()
+        camera.start_preview()
+        BackgroundColor = "black"
 
-	for x in range(3, -1, -1):
+        for x in range(3, -1, -1):
                 if x == 0:                        
                         Numeral = ""
                         Message = "PRENEZ LA POSE"
@@ -313,10 +312,10 @@ def TakePictures():
         global pygame
         global ImageShowed
         global CountDownPhoto
-	global BackgroundColor
-	global Printing
-	global PhotosPerCart
-	global TotalImageCount
+        global BackgroundColor
+        global Printing
+        global PhotosPerCart
+        global TotalImageCount
 
         input(pygame.event.get())
         CountDownPhoto = "1/3"        
@@ -359,8 +358,8 @@ def TakePictures():
         Printing = False
         WaitForPrintingEvent()
         Numeral = ""
-	Message = ""
-	print(Printing)
+        Message = ""
+        print(Printing)
         if Printing:
                 if (TotalImageCount <= PhotosPerCart):
                         if os.path.isfile('/home/pi/Desktop/tempprint.jpg'):
