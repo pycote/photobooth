@@ -92,5 +92,5 @@ def send_message(service, destination, obj, body, attachments=[]):
     ).execute()
 
 # test send email
-send_message(service, "destination@domain.com", "This is a subject", 
-            "This is the body of the email", ["test.txt", "anyfile.png"])
+#send_message(service, "le8octobre2022@gmail.com", "Photobooth de Dan & Sylvie", 
+#            "Voici votre photo et merci encore de votre présence", ["/home/pi/Desktop/tempprint.jpg"])

@@ -10,6 +10,7 @@ from threading import Thread
 from pygame.locals import *
 from time import sleep
 from PIL import Image, ImageDraw
+from sendemail import *
 
 
 # initialise global variables
@@ -181,6 +182,9 @@ def UpdateDisplay():
     if (BackgroundColor != ""):
             #print(BackgroundColor)
             background.fill(pygame.Color("black"))
+    else:
+          background.fill(pygame.Color(BackgroundColor))
+          
     if (Message != ""):
             #print(displaytext)
             font = pygame.font.Font(None, 100)
@@ -389,6 +393,35 @@ def TakePictures():
                         UpdateDisplay()
                         time.sleep(1)
                 
+        Message = "Appuyez sur le bouton pour recevoir par courriel"
+        UpdateDisplay()
+        time.sleep(1)
+        Message = ""
+        UpdateDisplay()
+        Emailing = False
+        WaitForEmailingEvent()
+        Numeral = ""
+        Message = ""
+        print(Emailing)
+        if Emailing:
+                if (TotalImageCount <= PhotosPerCart):
+                        if os.path.isfile('/home/pi/Desktop/tempprint.jpg'):
+                                
+                                Message = "Envoi en cours..."
+                                UpdateDisplay()
+                                time.sleep(1)
+                                # print the buffer file
+                                #envoir du courriel
+                                send_message(service, "le8octobre2022@gmail.com", "Photobooth de Dan & Sylvie", 
+                                        "Voici votre photo et merci encore de votre présence", ["/home/pi/Desktop/tempprint.jpg"])
+
+                                time.sleep(40)            
+                else:
+                        Message = "Nous vous enverrons vos photos"
+                        Numeral = ""
+                        UpdateDisplay()
+                        time.sleep(1)
+                
         Message = ""
         Numeral = ""
         ImageShowed = False
@@ -418,6 +451,34 @@ def WaitForPrintingEvent():
                 if event.key == pygame.K_DOWN:
                     GPIO.remove_event_detect(BUTTON_PIN)
                     Printing = True
+                    return        
+        BackgroundColor = ""
+        Numeral = str(countDown)
+        Message = ""
+        UpdateDisplay()        
+        countDown = countDown - 1
+        time.sleep(1)
+
+    GPIO.remove_event_detect(BUTTON_PIN)
+ 	
+def WaitForEmailingEvent():
+    global BackgroundColor
+    global Numeral
+    global Message
+    global Emailing
+    global pygame
+    countDown = 5
+    GPIO.add_event_detect(BUTTON_PIN, GPIO.RISING)
+    GPIO.add_event_callback(BUTTON_PIN, MyCallback)
+    
+    while Emailing == False and countDown > 0:
+        if(Emailing == True):
+            return
+        for event in pygame.event.get():			
+            if event.type == pygame.KEYDOWN:				
+                if event.key == pygame.K_DOWN:
+                    GPIO.remove_event_detect(BUTTON_PIN)
+                    Emailing = True
                     return        
         BackgroundColor = ""
         Numeral = str(countDown)
